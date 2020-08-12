@@ -1,5 +1,6 @@
 # sqqmall-credits-java-sdk
 积分开放平台开发包
+
 import cn.com.sqqmall.credits.sdk.*;
 import com.alibaba.fastjson.JSON;
 
