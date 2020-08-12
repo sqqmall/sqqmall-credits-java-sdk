@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "SqqmallIntegralsServlet", urlPatterns = { "/sqijsdk" })
+@WebServlet(name = "SqqmallIntegralsServlet", urlPatterns = { "/sqqmall" })
 public class SqqmallIntegralsServlet implements Servlet{
     private String api_url = "";//域名
     private transient ServletConfig servletConfig;
