@@ -14,7 +14,7 @@ import java.util.Map;
 
 @WebServlet(name = "MyServlet", urlPatterns = { "/my" })
 public class MyServlet implements Servlet{
-    private String api_url = "https://test-open-integral-api.sqqmall.com";
+    private String api_url = "";//域名
     private transient ServletConfig servletConfig;
     private DoPost doPost = new DoPost();
     @Override
