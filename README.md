@@ -81,7 +81,7 @@ public class MyServlet implements Servlet{
     private String creditDeduct(ServletRequest request) throws Exception {
         String uri = "/api/v1/integrals/sub";
         String app_key = "zzappkey2020";
-        String app_secret = "";/密钥参与加签，但是不在请求中传递
+        String app_secret = "";//密钥参与加签，但是不在请求中传递
         CreditTool creditTool = new CreditTool(app_key,app_secret);
         CreditDeductParams creditDeductParams = creditTool.parseCreditDeductParams((HttpServletRequest) request);
         Map<String,String> map = new HashMap<String, String>();
@@ -111,7 +111,7 @@ public class MyServlet implements Servlet{
     private String userReg(ServletRequest request) throws Exception {
         String uri = "/api/v1/users/reg";
         String app_key = "zzappkey2020";
-        String app_secret = "";/密钥参与加签，但是不在请求中传递
+        String app_secret = "";//密钥参与加签，但是不在请求中传递
         CreditTool creditTool = new CreditTool(app_key,app_secret);
         UserRegParams userRegParams = creditTool.parseUserRegParams((HttpServletRequest) request);
         Map<String,String> map = new HashMap<String, String>();
@@ -130,7 +130,7 @@ public class MyServlet implements Servlet{
     private String userWhiteList(ServletRequest request) throws Exception {
         String uri = "/api/v1/users/white-list";
         String app_key = "zzappkey2020";
-        String app_secret = "";/密钥参与加签，但是不在请求中传递
+        String app_secret = "";//密钥参与加签，但是不在请求中传递
         CreditTool creditTool = new CreditTool(app_key,app_secret);
         UserWhiteListParams userWhiteListParams = creditTool.parseUserWhiteListParams((HttpServletRequest) request);
         Map<String,String> map = new HashMap<String, String>();
@@ -156,7 +156,7 @@ public class MyServlet implements Servlet{
     private String creditAdd(ServletRequest request) throws Exception {
         String uri = "/api/v1/integrals/add";
         String app_key = "zzappkey2020";
-        String app_secret = "";/密钥参与加签，但是不在请求中传递
+        String app_secret = "";//密钥参与加签，但是不在请求中传递
         CreditTool creditTool = new CreditTool(app_key,app_secret);
         CreditAddParams creditAddParams = creditTool.parseCreditAddParams((HttpServletRequest) request);
         Map<String,String> map = new HashMap<String, String>();
@@ -186,7 +186,7 @@ public class MyServlet implements Servlet{
     private String creditQuery(ServletRequest request) throws Exception {
         String uri = "/api/v1/integrals/query";
         String app_key = "zzappkey2020";
-        String app_secret = "";/密钥参与加签，但是不在请求中传递
+        String app_secret = "";//密钥参与加签，但是不在请求中传递
         CreditTool creditTool = new CreditTool(app_key,app_secret);
         CreditQueryParams creditQueryParams = creditTool.parseCreditQueryParams((HttpServletRequest) request);
         Map<String,String> map = new HashMap<String, String>();
@@ -208,7 +208,7 @@ public class MyServlet implements Servlet{
     private String storeExists(ServletRequest request) throws Exception {
         String uri = "/api/v1/stores/exist";
         String app_key = "zzappkey2020";
-        String app_secret = "";/密钥参与加签，但是不在请求中传递
+        String app_secret = "";//密钥参与加签，但是不在请求中传递
         CreditTool creditTool = new CreditTool(app_key,app_secret);
         StoreExistsParams storeExistsParams = creditTool.parseStoreExistsParams((HttpServletRequest) request);
         Map<String,String> map = new HashMap<String, String>();
