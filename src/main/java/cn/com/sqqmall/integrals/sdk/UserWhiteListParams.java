@@ -1,4 +1,4 @@
-package cn.com.sqqmall.credits.sdk;
+package cn.com.sqqmall.integrals.sdk;
 
 public class UserWhiteListParams {
     private String app_key;

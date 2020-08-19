@@ -1,4 +1,4 @@
-package cn.com.sqqmall.credits.sdk;
+package cn.com.sqqmall.integrals.sdk;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;

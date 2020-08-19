@@ -1,4 +1,4 @@
-package cn.com.sqqmall.credits.sdk;
+package cn.com.sqqmall.integrals.sdk;
 
 public class CreditAddParams {
     private String app_key; //接口app_key，应用的唯一标识

@@ -1,4 +1,4 @@
-package cn.com.sqqmall.credits.sdk;
+package cn.com.sqqmall.integrals.sdk;
 
 public class AutoLoginParams {
     private String uid;//用户唯一性标识，对应唯一一个用户且不可变 （用not_login作为uid标记游客用户（下期））

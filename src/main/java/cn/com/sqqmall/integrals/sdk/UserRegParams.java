@@ -1,4 +1,4 @@
-package cn.com.sqqmall.credits.sdk;
+package cn.com.sqqmall.integrals.sdk;
 
 public class UserRegParams {
     private String app_key;

@@ -1,9 +1,10 @@
-package cn.com.sqqmall.credits.sdk;
+package cn.com.sqqmall.integrals.sdk;
 
-public class CreditQueryParams {
-    private String app_key; //接口app_key，应用的唯一标识
-    private String uid;//用户标识，唯一且不可变
-    private String sign;//MD5签名
+public class IntegralsQueryNotifyParams {
+    private String app_key;//接口appKey，应用的唯一标识
+    private String uid;//用户唯一性标识，对应唯一一个用户且不可变
+    private String sign;
+
     public void setApp_key(String app_key){
         this.app_key = app_key;
     }
