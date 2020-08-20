@@ -8,7 +8,7 @@ public class IntegralsAddNotifyResult {
     private Map<String,String> result;
     private static final String SUCCESS = "ok";
     private static final String FAIL = "fail";
-    public void setResult(boolean success,Map<String,String> result){
+    public void setResult(Boolean success, Map<String,String> result){
         if(success){
             result.put("code",SUCCESS);
             result.put("msg",SUCCESS);
@@ -20,9 +20,9 @@ public class IntegralsAddNotifyResult {
     public Map<String,String> getResult() throws Exception {
         if(result.get("code")==null){
             throw  new Exception("结果状态是必须响应的数据项");
-        }else if(result.get("biz_id")==null){
+        }else /*if(result.get("biz_id")==null){
             throw  new Exception("开发者订单号是必须响应的数据项");
-        }else if(result.get("integrals")==null){
+        }else*/ if(result.get("integrals")==null){
             throw  new Exception("用户积分余额是必须响应的数据项");
         }else{
             return result;

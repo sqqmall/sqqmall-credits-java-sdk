@@ -1,6 +1,12 @@
 package cn.com.sqqmall.integrals.sdk;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreditTool {
     private String app_key;
@@ -18,6 +24,18 @@ public class CreditTool {
      */
     public void checkAppKey(HttpServletRequest request) throws Exception {
         if(!app_key.equals(request.getParameter("app_key"))){
+            throw new Exception("app_key不匹配");
+        }
+    }
+
+
+    /**
+     * 通用检查项
+     * @param request
+     * @throws Exception
+     */
+    public void checkAppKeyObject(JSONObject request) throws Exception {
+        if(!app_key.equals(request.getString("app_key"))){
             throw new Exception("app_key不匹配");
         }
     }
@@ -284,7 +302,7 @@ public class CreditTool {
      * @return
      * @throws Exception
      */
-    public IntegralsNotifyParams parseIntegralsNotifyParams(HttpServletRequest request) throws Exception {
+    public IntegralsNotifyParams parseIntegralsNotifyParams_bak(HttpServletRequest request) throws Exception {
         checkAppKey(request);
         if(request.getParameter("uid") == null){
             throw new Exception("uid为必填项");
@@ -349,6 +367,208 @@ public class CreditTool {
         return integralsQueryNotifyParams;
     }
 
-    //商品信息变动数据验证
 
+    /**
+     * 结果通知
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public IntegralsNotifyParams parseIntegralsNotifyParams(JSONObject request) throws Exception {
+        checkAppKeyObject(request);
+        if(request.getString("uid") == null){
+            throw new Exception("uid为必填项");
+        }
+        if(request.getString("success") == null){
+            throw new Exception("success为必填项");
+        }
+        if(request.getString("event_num") == null){
+            throw new Exception("event_num为必填项");
+        }
+        if(request.getString("timestamp") == null){
+            throw new Exception("timestamp为必填项");
+        }
+        boolean verify = SignToolJSONObject.verifySignedString(app_secret,request);
+        if(!verify){
+            throw new Exception("签名验证失败");
+        }
+        IntegralsNotifyParams integralsNotifyParams = new IntegralsNotifyParams();
+        integralsNotifyParams.setApp_key(request.getString("app_key"));
+        integralsNotifyParams.setUid(request.getString("uid"));
+        integralsNotifyParams.setUid(request.getString("success"));
+        integralsNotifyParams.setUid(request.getString("event_num"));
+        integralsNotifyParams.setUid(request.getString("timestamp"));
+        integralsNotifyParams.setUid(request.getString("sign"));
+        if(request.getString("integrals")!=null){
+            integralsNotifyParams.setIntegrals(request.getString("integrals"));
+        }
+        if(request.getString("send_integrals")!=null){
+            integralsNotifyParams.setSend_integrals(request.getString("send_integrals"));
+        }
+        if(request.getString("pay_money")!=null){
+            integralsNotifyParams.setPay_money(request.getString("pay_money"));
+        }
+        if(request.getString("biz_id")!=null){
+            integralsNotifyParams.setBiz_id(request.getString("biz_id"));
+        }
+        if(request.getString("error_msg")!=null){
+            integralsNotifyParams.setError_msg(request.getString("error_msg"));
+        }
+        return  integralsNotifyParams;
+    }
+
+
+
+    public IntegralsAddNotifyParams parseIntegralsAddNotifyParams(JSONObject request) throws Exception {
+        checkAppKeyObject(request);
+        if(request.getString("uid") == null){
+            throw new Exception("uid为必填项");
+        }
+        if(request.getString("integrals") == null){
+            throw new Exception("integrals为必填项");
+        }
+        if(request.getString("type") == null){
+            throw new Exception("type为必填项");
+        }
+
+        if(request.getString("timestamp") == null){
+            throw new Exception("timestamp为必填项");
+        }
+
+        if(request.getString("event_num") == null){
+            throw new Exception("event_num为必填项");
+        }
+        //验签
+        boolean verify = SignToolJSONObject.verifySignedString(app_secret,request);
+        if(!verify){
+            throw new Exception("签名验证失败");
+        }
+        IntegralsAddNotifyParams integralsAddNotifyParams = new IntegralsAddNotifyParams();
+        if(request.getString("desc") != null){
+            integralsAddNotifyParams.setDesc(request.getString("desc"));
+        }
+        if(request.getString("ip") != null){
+            integralsAddNotifyParams.setIp(request.getString("ip"));
+        }
+        return integralsAddNotifyParams;
+    }
+
+    //商品信息变动数据验证
+    public IntegralsProductShelfParams parseIntegralsProductShelfParams(JSONObject request) throws Exception {
+        checkAppKeyObject(request);
+        if(request.getString("type") == null){
+            throw new Exception("type为必填项");
+        }
+        if(request.getString("product") == null){
+            throw new Exception("product为必填项");
+        }
+        //验签
+        boolean verify = SignToolJSONObject.verifySignedString(app_secret,request);
+        if(!verify){
+            throw new Exception("签名验证失败");
+        }
+        IntegralsProductShelfParams integralsProductShelfParams = new IntegralsProductShelfParams();
+        integralsProductShelfParams.setApp_key(request.getString("app_key"));
+        integralsProductShelfParams.setType(request.getString("type"));
+        JSONObject product = JSON.parseObject(request.getString("product"));
+        IntegralsProductParams productParams;
+        productParams = parseIntegralsProductParams(product);
+        integralsProductShelfParams.setProduct(productParams);
+
+        integralsProductShelfParams.setSign(request.getString("sign"));
+        return integralsProductShelfParams;
+    }
+
+    public IntegralsProductParams parseIntegralsProductParams(JSONObject request) throws Exception {
+        if(request.getString("pro_id") == null){
+            throw new Exception("pro_id为必填项");
+        }
+        if(request.getString("pro_code") == null){
+            throw new Exception("pro_code为必填项");
+        }
+        if(request.getString("pro_name") == null){
+            throw new Exception("pro_name为必填项");
+        }
+        if(request.getString("pic") == null){
+            throw new Exception("pic为必填项");
+        }
+        if(request.getString("price") == null){
+            throw new Exception("price为必填项");
+        }
+        if(request.getString("send_integrals") == null){
+            throw new Exception("send_integrals为必填项");
+        }
+        if(request.getString("quantity") == null){
+            throw new Exception("quantity为必填项");
+        }
+        if(request.getString("minnum_order_quantity") == null){
+            throw new Exception("minnum_order_quantity为必填项");
+        }
+        if(request.getString("maxnum_order_quantity_one_day") == null){
+            throw new Exception("maxnum_order_quantity_one_day为必填项");
+        }
+        if(request.getString("maxnum_order_quantity_duration") == null){
+            throw new Exception("maxnum_order_quantity_duration为必填项");
+        }
+        if(request.getString("sku") == null){
+            throw new Exception("sku为必填项");
+        }
+        IntegralsProductParams productParams = new IntegralsProductParams();
+        productParams.setPro_id(request.getString("pro_id"));
+        productParams.setPro_code(request.getString("pro_code"));
+        productParams.setPro_name(request.getString("pro_name"));
+        productParams.setPic(request.getString("pic"));
+        productParams.setPrice(request.getString("price"));
+        productParams.setSend_integrals(request.getString("send_integrals"));
+        productParams.setQuantity(request.getString("quantity"));
+        productParams.setMinnum_order_quantity(request.getString("minnum_order_quantity"));
+        productParams.setMaxnum_order_quantity_one_day(request.getString("maxnum_order_quantity_one_day"));
+        IntegralsProductInfoTimeParams timeParams;
+        JSONObject time = JSON.parseObject(request.getString("maxnum_order_quantity_duration"));
+        timeParams = parseIntegralsProductInfoTimeParams(time);
+        productParams.setMaxnum_order_quantity_duration(timeParams);
+        List<IntegralsProductInfoSKUParams> skuParams = new ArrayList<>();
+        JSONArray sku = JSON.parseArray(request.getString("sku"));
+        for (int i=0;i<sku.size();i++){
+            JSONObject skus = JSON.parseObject(sku.get(i).toString());
+            IntegralsProductInfoSKUParams skuParam = parseIntegralsProductInfoSKUParams(skus);
+            skuParams.add(skuParam);
+        }
+        productParams.setSku(skuParams);
+        return productParams;
+    }
+
+    public IntegralsProductInfoTimeParams parseIntegralsProductInfoTimeParams(JSONObject request) throws Exception {
+        if(request.getString("start_time") == null){
+            throw new Exception("start_time为必填项");
+        }
+        if(request.getString("end_time") == null){
+            throw new Exception("end_time为必填项");
+        }
+        if(request.getString("maxnum_order_quantity") == null){
+            throw new Exception("maxnum_order_quantity为必填项");
+        }
+        IntegralsProductInfoTimeParams productInfoTimeParams = new IntegralsProductInfoTimeParams();
+        productInfoTimeParams.setStart_time(request.getString("start_time"));
+        productInfoTimeParams.setEnd_time(request.getString("end_time"));
+        productInfoTimeParams.setMaxnum_order_quantity(request.getString("maxnum_order_quantity"));
+        return productInfoTimeParams;
+    }
+
+    public IntegralsProductInfoSKUParams parseIntegralsProductInfoSKUParams(JSONObject request) throws Exception {
+        if(request.getString("sku_id") == null){
+            throw new Exception("sku_id为必填项");
+        }
+        if(request.getString("price") == null){
+            throw new Exception("price为必填项");
+        }
+        if(request.getString("pic") == null){
+            throw new Exception("pic为必填项");
+        }
+        IntegralsProductInfoSKUParams productInfoSKUParams = new IntegralsProductInfoSKUParams();
+        productInfoSKUParams.setSku_id(request.getString("sku_id"));
+        productInfoSKUParams.setPic(request.getString("pic"));
+        productInfoSKUParams.setPrice(request.getString("price"));
+        return productInfoSKUParams;
+    }
 }

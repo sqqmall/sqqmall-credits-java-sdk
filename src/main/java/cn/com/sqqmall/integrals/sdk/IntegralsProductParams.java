@@ -1,6 +1,6 @@
 package cn.com.sqqmall.integrals.sdk;
 
-import java.util.Map;
+import java.util.List;
 
 public class IntegralsProductParams {
     private String pro_id;
@@ -13,7 +13,7 @@ public class IntegralsProductParams {
     private String minnum_order_quantity;
     private String maxnum_order_quantity_one_day;
     private IntegralsProductInfoTimeParams maxnum_order_quantity_duration;
-    private Map<String, IntegralsProductInfoSKUParams[]> sku;
+    private List<IntegralsProductInfoSKUParams> sku;
 
     public void setPro_id(String pro_id){
         this.pro_id = pro_id;
@@ -45,8 +45,8 @@ public class IntegralsProductParams {
     public void setMaxnum_order_quantity_duration(IntegralsProductInfoTimeParams maxnum_order_quantity_duration){
         this.maxnum_order_quantity_duration = maxnum_order_quantity_duration;
     }
-    public void setSku(IntegralsProductInfoSKUParams integralsProductInfoSKUParams){
-        this.sku = (Map<String, IntegralsProductInfoSKUParams[]>) integralsProductInfoSKUParams;
+    public void setSku(List<IntegralsProductInfoSKUParams> sku){
+        this.sku = sku;
     }
 
     public String getPro_id(){
@@ -80,7 +80,7 @@ public class IntegralsProductParams {
         return maxnum_order_quantity_duration;
     }
 
-    public Map<String, IntegralsProductInfoSKUParams[]> getSku() {
+    public List<IntegralsProductInfoSKUParams> getSku() {
         return sku;
     }
 }

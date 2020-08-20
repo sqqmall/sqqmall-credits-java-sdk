@@ -20,7 +20,6 @@ public class IntegralsAddNotifyParams {
     public void setIntegrals(String integrals){
         this.integrals = integrals;
     }
-
     public void setType(String type){
         this.type = type;
     }
@@ -54,19 +53,15 @@ public class IntegralsAddNotifyParams {
     public String getEvent_num(){
         return event_num;
     }
-
     public String getTimestamp(){
         return  timestamp;
     }
-
     public String getDesc(){
         return desc;
     }
-
     public String getIp(){
         return ip;
     }
-
     public String getSign(){
         return sign;
     }
