@@ -345,27 +345,7 @@ public class CreditTool {
         return  integralsNotifyParams;
     }
 
-    /**
-     * 查询积分
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    public IntegralsQueryNotifyParams parseIntegralsQueryNotifyParams(HttpServletRequest request) throws Exception {
-        checkAppKey(request);
-        if(request.getParameter("uid") == null){
-            throw new Exception("uid为必填项");
-        }
-        boolean verify = SignTool.verifySignedString(app_secret,request);
-        if(!verify){
-            throw new Exception("签名验证失败");
-        }
-        IntegralsQueryNotifyParams integralsQueryNotifyParams = new IntegralsQueryNotifyParams();
-        integralsQueryNotifyParams.setApp_key(request.getParameter("app_key"));
-        integralsQueryNotifyParams.setUid(request.getParameter("uid"));
-        integralsQueryNotifyParams.setUid(request.getParameter("sign"));
-        return integralsQueryNotifyParams;
-    }
+
 
 
     /**
@@ -527,7 +507,7 @@ public class CreditTool {
         JSONObject time = JSON.parseObject(request.getString("maxnum_order_quantity_duration"));
         timeParams = parseIntegralsProductInfoTimeParams(time);
         productParams.setMaxnum_order_quantity_duration(timeParams);
-        List<IntegralsProductInfoSKUParams> skuParams = new ArrayList<>();
+        List<IntegralsProductInfoSKUParams> skuParams = new ArrayList<IntegralsProductInfoSKUParams>();
         JSONArray sku = JSON.parseArray(request.getString("sku"));
         for (int i=0;i<sku.size();i++){
             JSONObject skus = JSON.parseObject(sku.get(i).toString());
@@ -571,4 +551,53 @@ public class CreditTool {
         productInfoSKUParams.setPrice(request.getString("price"));
         return productInfoSKUParams;
     }
+
+    /**
+     * 查询积分
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public IntegralsQueryNotifyParams parseIntegralsQueryNotifyParams_bak(JSONObject request) throws Exception {
+        checkAppKeyObject(request);
+
+        if(request.getString("uid") == null){
+            throw new Exception("uid为必填项");
+        }
+
+        boolean verify = SignToolJSONObject.verifySignedString(app_secret,request);
+
+        if(!verify){
+            throw new Exception("签名验证失败");
+        }
+
+        IntegralsQueryNotifyParams integralsQueryNotifyParams = new IntegralsQueryNotifyParams();
+        integralsQueryNotifyParams.setApp_key(request.getString("app_key"));
+        integralsQueryNotifyParams.setUid(request.getString("uid"));
+        integralsQueryNotifyParams.setUid(request.getString("sign"));
+        return integralsQueryNotifyParams;
+    }
+
+    /**
+     * 查询积分
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public IntegralsQueryNotifyParams parseIntegralsQueryNotifyParams(HttpServletRequest request) throws Exception {
+        checkAppKey(request);
+        if(request.getParameter("uid") == null){
+            throw new Exception("uid为必填项");
+        }
+        boolean verify = SignTool.verifySignedString(app_secret,request);
+        if(!verify){
+            throw new Exception("签名验证失败");
+        }
+        IntegralsQueryNotifyParams integralsQueryNotifyParams = new IntegralsQueryNotifyParams();
+        integralsQueryNotifyParams.setApp_key(request.getParameter("app_key"));
+        integralsQueryNotifyParams.setUid(request.getParameter("uid"));
+        integralsQueryNotifyParams.setUid(request.getParameter("sign"));
+        return integralsQueryNotifyParams;
+    }
+
 }

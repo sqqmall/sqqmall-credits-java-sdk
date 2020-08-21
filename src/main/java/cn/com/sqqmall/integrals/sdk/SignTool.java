@@ -67,6 +67,7 @@ public class SignTool {
     public static Boolean verifySignedString(String app_secret,HttpServletRequest request) throws Exception {
         Map<String,String> all_params = getMapToString(app_secret,request);
         String string_to_sign = stringToSign(all_params);
+        System.out.println(string_to_sign);
         String signed_str = getMD5SignedString(string_to_sign);
         String user_signed_string = request.getParameter("sign");//获取用户加签字符串
         if(signed_str==null){

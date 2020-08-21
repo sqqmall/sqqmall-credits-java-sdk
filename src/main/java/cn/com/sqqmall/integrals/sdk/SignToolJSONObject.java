@@ -20,7 +20,7 @@ public class SignToolJSONObject {
         //遍历请求参数
         for(String key:params.keySet()){
             if(!key.equals("sign")){
-                req_params.put(key, params.get(key).toString());
+                    req_params.put(key, params.get(key).toString());
             }
         }
         //app_secret 添加
@@ -67,6 +67,7 @@ public class SignToolJSONObject {
     public static Boolean verifySignedString(String app_secret,JSONObject req) throws Exception {
         Map<String,String> all_params = getMapToString(app_secret,req);
         String string_to_sign = stringToSign(all_params);
+        System.out.println(string_to_sign);
         String signed_str = getMD5SignedString(string_to_sign);
         String user_signed_string = req.get("sign").toString();//获取用户加签字符串
         if(signed_str==null){
