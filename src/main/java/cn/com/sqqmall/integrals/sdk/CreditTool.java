@@ -247,8 +247,8 @@ public class CreditTool {
      * @param request
      * @return
      * @throws Exception
-     */
-    public IntegralsConsumeParams parseIntegralsConsumeParams(HttpServletRequest request) throws Exception {
+     *//*
+    public IntegralsConsumeParams parseIntegralsConsumeParams_BAK(HttpServletRequest request) throws Exception {
         checkAppKey(request);
         if(request.getParameter("uid") == null){
             throw new Exception("uid为必填项");
@@ -294,7 +294,7 @@ public class CreditTool {
             integralsConsumeParams.setParams(request.getParameter("params"));
         }
         return integralsConsumeParams;
-    }
+    }*/
 
     /**
      * 结果通知
@@ -600,4 +600,150 @@ public class CreditTool {
         return integralsQueryNotifyParams;
     }
 
+    /**
+     * 扣积分接口 通知
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public IntegralsConsumeParams parseIntegralsConsumeParams(JSONObject request) throws Exception {
+        checkAppKeyObject(request);
+        if(request.getString("uid") == null){
+            throw new Exception("uid为必填项");
+        }
+        if(request.getString("integrals") == null){
+            throw new Exception("integrals为必填项");
+        }
+        if(request.getString("timestamp") == null){
+            throw new Exception("timestamp为必填项");
+        }
+        if(request.getString("desc") == null){
+            throw new Exception("desc为必填项");
+        }
+        if(request.getString("type") == null){
+            throw new Exception("type为必填项");
+        }
+        if(request.getString("event_num") == null){
+            throw new Exception("event_num为必填项");
+        }
+
+        boolean verify = SignToolJSONObject.verifySignedString(app_secret,request);
+
+        if(!verify){
+            throw new Exception("签名验证失败");
+        }
+
+        IntegralsConsumeParams integralsConsumeParams = new IntegralsConsumeParams();
+        integralsConsumeParams.setApp_key(request.getString("app_key"));
+        integralsConsumeParams.setUid(request.getString("uid"));
+        integralsConsumeParams.setIntegrals(request.getString("integrals"));
+        integralsConsumeParams.setTimestamp(request.getString("timestamp"));
+        integralsConsumeParams.setDesc(request.getString("desc"));
+        integralsConsumeParams.setEvent_num(request.getString("event_num"));
+        integralsConsumeParams.setType(request.getString("type"));
+        integralsConsumeParams.setSign(request.getString("sign"));
+        if(request.getString("face_price")!=null){
+            integralsConsumeParams.setFace_price(request.getString("face_price"));
+        }
+        if(request.getString("actual_price")!=null){
+            integralsConsumeParams.setActual_price(request.getString("actual_price"));
+        }
+        if(request.getString("ip")!=null){
+            integralsConsumeParams.setIp(request.getString("ip"));
+        }
+        if(request.getString("params")!=null){
+            ConsumeParams params = new ConsumeParams();
+            JSONObject products = JSON.parseObject(request.getString("params"));
+            params = parseConsumeParams(products);
+            integralsConsumeParams.setParams(params);
+        }
+        return integralsConsumeParams;
+    }
+
+    public ConsumeParams parseConsumeParams(JSONObject request) throws Exception {
+        if(request.getString("store_name") == null){
+            throw new Exception("store_name为必填项");
+        }
+        if(request.getString("total_price") == null){
+            throw new Exception("total_price为必填项");
+        }
+        if(request.getString("goods_price") == null){
+            throw new Exception("goods_price为必填项");
+        }
+        if(request.getString("total_send_integrals") == null){
+            throw new Exception("total_send_integrals为必填项");
+        }
+        if(request.getString("freight") == null){
+            throw new Exception("freight为必填项");
+        }
+        if(request.getString("receiver_name") == null){
+            throw new Exception("receiver_name为必填项");
+        }
+        if(request.getString("receiver_phone") == null){
+            throw new Exception("receiver_phone为必填项");
+        }
+        if(request.getString("receiver_province") == null){
+            throw new Exception("receiver_province为必填项");
+        }
+        if(request.getString("receiver_city") == null){
+            throw new Exception("receiver_city为必填项");
+        }
+        if(request.getString("receiver_area") == null){
+            throw new Exception("receiver_area为必填项");
+        }
+        if(request.getString("receiver_address") == null){
+            throw new Exception("receiver_address为必填项");
+        }
+        if(request.getString("products") == null){
+            throw new Exception("products为必填项");
+        }
+        ConsumeParams params = new ConsumeParams();
+        params.setStore_name(request.getString("store_name"));
+        params.setTotal_price(request.getString("total_price"));
+        params.setGoods_price(request.getString("goods_price"));
+        params.setTotal_send_integrals(request.getString("total_send_integrals"));
+        params.setFreight(request.getString("freight"));
+        params.setReceiver_name(request.getString("receiver_name"));
+        params.setReceiver_phone(request.getString("receiver_phone"));
+        params.setReceiver_province(request.getString("receiver_province"));
+        params.setReceiver_city(request.getString("receiver_city"));
+        params.setReceiver_area(request.getString("receiver_area"));
+        params.setReceiver_address(request.getString("receiver_address"));
+
+        List<StoreProducts> storeProducts = new ArrayList<StoreProducts>();
+        JSONArray products = JSON.parseArray(request.getString("products"));
+        for (int i=0;i<products.size();i++){
+            JSONObject pro = JSON.parseObject(products.get(i).toString());
+            StoreProducts storeProduct = parseStoreProducts(pro);
+            storeProducts.add(storeProduct);
+        }
+        params.setProducts(storeProducts);
+
+        return params;
+    }
+
+    public StoreProducts parseStoreProducts(JSONObject request) throws Exception {
+        if(request.getString("pro_id") == null){
+            throw new Exception("pro_id为必填项");
+        }
+        if(request.getString("pro_name") == null){
+            throw new Exception("pro_name为必填项");
+        }
+        if(request.getString("price") == null){
+            throw new Exception("price为必填项");
+        }
+        if(request.getString("count") == null){
+            throw new Exception("count为必填项");
+        }
+        if(request.getString("send_integrals") == null){
+            throw new Exception("send_integrals为必填项");
+        }
+        StoreProducts storeProducts = new StoreProducts();
+        storeProducts.setPro_id(request.getString("pro_id"));
+        storeProducts.setPro_name(request.getString("pro_name"));
+        storeProducts.setPrice(request.getString("price"));
+        storeProducts.setCount(Integer.valueOf(request.getString("count")));
+        storeProducts.setSend_integrals(request.getString("send_integrals"));
+        return  storeProducts;
+    }
 }

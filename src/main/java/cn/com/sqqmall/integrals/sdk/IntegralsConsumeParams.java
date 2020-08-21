@@ -11,7 +11,7 @@ public class IntegralsConsumeParams {
     private String face_price;//兑换商品的市场价值(下期)
     private String actual_price;//此次兑换实际扣除开发者账户费用(下期)
     private String ip;//用户ip，不保证获取到(下期)
-    private String params;//详情参数，不同的类型，请求时传不同的内容,订单类型请求参数格式如POST请求订单参数字符串示例所示
+    private ConsumeParams params;//详情参数，不同的类型，请求时传不同的内容,订单类型请求参数格式如POST请求订单参数字符串示例所示
     private String sign;//允许购买商品操作类型， append 附加 add 删除上一次在加
 
     public void setUid(String uid){
@@ -53,7 +53,7 @@ public class IntegralsConsumeParams {
         this.ip = ip;
     }
 
-    public void setParams(String params){
+    public void setParams(ConsumeParams params){
         this.params = params;
     }
 
@@ -101,7 +101,7 @@ public class IntegralsConsumeParams {
         return ip;
     }
 
-    public String getParams(){
+    public ConsumeParams getParams(){
         return params;
     }
 
