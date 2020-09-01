@@ -41,19 +41,27 @@ public class SignToolJSONObject {
         return to_sign_string;
     }
 
-    /**
-     * 获取加签字符串
-     * @param string
-     * @return
-     * @throws Exception
-     */
-    public static String getMD5SignedString(String string) throws Exception {
-        try{
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(string.getBytes());
-            return new BigInteger(1,md.digest()).toString(16);
-        }catch (Exception e){
-            throw new Exception("MD5加密出错!");
+    public static String getMD5SignedString(String sourceStr){
+        try {
+            // 获得MD5摘要算法的 MessageDigest对象
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            // 使用指定的字节更新摘要
+            mdInst.update(sourceStr.getBytes());
+            // 获得密文
+            byte[] md = mdInst.digest();
+            // 把密文转换成十六进制的字符串形式
+            StringBuffer buf = new StringBuffer();
+            for (int i = 0; i < md.length; i++) {
+                int tmp = md[i];
+                if (tmp < 0)
+                    tmp += 256;
+                if (tmp < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(tmp));
+            }
+            return buf.toString();// 32位加密
+        } catch (Exception e) {
+            throw new RuntimeException("没有md5这个算法！");
         }
     }
 
@@ -69,7 +77,9 @@ public class SignToolJSONObject {
         String string_to_sign = stringToSign(all_params);
         System.out.println(string_to_sign);
         String signed_str = getMD5SignedString(string_to_sign);
+        System.out.println(signed_str);
         String user_signed_string = req.get("sign").toString();//获取用户加签字符串
+        System.out.println(user_signed_string);
         if(signed_str==null){
             throw new Exception("本地加签字符串不能为空!");
         }else if(user_signed_string==null){
