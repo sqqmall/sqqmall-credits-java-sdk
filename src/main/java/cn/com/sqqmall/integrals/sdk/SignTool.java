@@ -44,7 +44,7 @@ public class SignTool {
     public static String getMD5SignedString(String sourceStr){
         try {
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
-            mdInst.update(sourceStr.getBytes());
+            mdInst.update(sourceStr.getBytes("utf-8"));
             byte[] md = mdInst.digest();
             // 把密文转换成十六进制的字符串形式
             StringBuffer buf = new StringBuffer();

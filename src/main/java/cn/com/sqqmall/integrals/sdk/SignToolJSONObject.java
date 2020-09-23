@@ -46,7 +46,7 @@ public class SignToolJSONObject {
             // 获得MD5摘要算法的 MessageDigest对象
             MessageDigest mdInst = MessageDigest.getInstance("MD5");
             // 使用指定的字节更新摘要
-            mdInst.update(sourceStr.getBytes());
+            mdInst.update(sourceStr.getBytes("utf-8"));
             // 获得密文
             byte[] md = mdInst.digest();
             // 把密文转换成十六进制的字符串形式
