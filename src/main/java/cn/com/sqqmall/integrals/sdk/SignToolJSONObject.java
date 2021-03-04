@@ -1,7 +1,7 @@
 package cn.com.sqqmall.integrals.sdk;
 
 import com.alibaba.fastjson.JSONObject;
-
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Map;
