@@ -20,7 +20,9 @@ public class SignToolJSONObject {
         //遍历请求参数
         for(String key:params.keySet()){
             if(!key.equals("sign")){
-                    req_params.put(key, params.get(key).toString());
+                                   req_params.put(key,
+                        trimFirstAndLastChar(JSONObject.toJSONString(params.get(key),
+                        SerializerFeature.WriteMapNullValue),"\""));
             }
         }
         //app_secret 添加
@@ -89,6 +91,25 @@ public class SignToolJSONObject {
         }else{
             return true;
         }
+    }
+    
+    /**
+     * 去除首尾指定字符
+     * @param str   字符串
+     * @param element   指定字符
+     * @return
+     */
+    public static String trimFirstAndLastChar(String str, String element){
+        boolean beginIndexFlag = true;
+        boolean endIndexFlag = true;
+        do{
+            int beginIndex = str.indexOf(element) == 0 ? 1 : 0;
+            int endIndex = str.lastIndexOf(element) + 1 == str.length() ? str.lastIndexOf(element) : str.length();
+            str = str.substring(beginIndex, endIndex);
+            beginIndexFlag = (str.indexOf(element) == 0);
+            endIndexFlag = (str.lastIndexOf(element) + 1 == str.length());
+        } while (beginIndexFlag || endIndexFlag);
+        return str;
     }
 
 }
